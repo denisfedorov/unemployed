@@ -8,6 +8,8 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'jquery-rails', '2.1.4'
 gem 'pg', '0.14.1'
+gem 'koala'
+gem 'omniauth-facebook'
 
 
 # Bundle edge Rails instead:
@@ -34,9 +36,8 @@ group :assets do
 end
 
 group :test do
-  gem 'capybara', '2.0.2'
+  gem 'capybara', '1.1.2'
   gem 'factory_girl_rails', '4.1.0'
-  gem 'cucumber-rails', '1.3.0', :require => false
   gem 'database_cleaner', '0.9.1'
   # gem 'launchy', '2.1.0'
   # gem 'rb-fsevent', '0.9.1', :require => false

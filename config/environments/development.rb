@@ -34,4 +34,7 @@ Unemployed::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  ENV['FACEBOOK_APP_ID'] = "275710812557288";
+  ENV['FACEBOOK_SECRET'] = "1496888d604d83677c8b6bde34455c86";
 end
