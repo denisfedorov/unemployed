@@ -20,19 +20,32 @@ class User < ActiveRecord::Base
       user.name = auth.info.name
       user.oauth_token = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
-      user.password = generate_password
-      user.password_confirmation = user.password
+      user.generate_password
       user.save!
     end
   end
 
+  def generate_password
+     self.password = (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).shuffle[0..7].join
+     self.password_confirmation = password
+  end
+
+  def pic_url
+    me = graph.get_object("me")
+    graph.get_picture(me["username"])
+  end
+
+  def friend_list
+  end
+
   private
+
+    def graph
+      @graph ||= Koala::Facebook::API.new(oauth_token)
+    end
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
     end
 
-    def generate_password
-      return (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).shuffle[0..7].join
-    end
 end

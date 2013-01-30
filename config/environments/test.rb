@@ -34,4 +34,8 @@ Unemployed::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  ENV['FACEBOOK_APP_ID'] = "275710812557288";
+  ENV['FACEBOOK_SECRET'] = "1496888d604d83677c8b6bde34455c86";
+
 end
