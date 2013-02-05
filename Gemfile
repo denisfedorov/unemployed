@@ -9,7 +9,7 @@ gem 'bootstrap-will_paginate', '0.0.9'
 gem 'jquery-rails', '2.1.4'
 gem 'pg', '0.14.1'
 gem 'koala'
-gem 'omniauth-facebook'
+gem 'omniauth-facebook', '1.4.0'
 
 
 # Bundle edge Rails instead:
