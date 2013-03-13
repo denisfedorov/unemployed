@@ -13,6 +13,7 @@ Offline expert - Referenced expert who has no account yet
 == Administrator
 
 Has all the rights
+- Corrects new categories
 
 == Moderator
 

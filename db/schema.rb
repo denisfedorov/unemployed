@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130128212055) do
+ActiveRecord::Schema.define(:version => 20130313185727) do
+
+  create_table "recommendations", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "rec_category_id"
+    t.integer  "link_type"
+    t.string   "email"
+    t.string   "phone"
+    t.integer  "service_id"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.text     "comment"
+    t.string   "photo"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "recommendations", ["service_id"], :name => "index_recommendations_on_service_id"
+  add_index "recommendations", ["user_id", "created_at"], :name => "index_recommendations_on_user_id_and_created_at"
 
   create_table "users", :force => true do |t|
     t.string   "name"
