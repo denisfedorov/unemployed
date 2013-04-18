@@ -2,6 +2,16 @@ require 'spec_helper'
 
 describe "Authentication" do
 
+  before (:all) do
+    @fb_user = create_fb_user
+    caps = Selenium::WebDriver::Remote::Capabilities.phantomjs(:javascript_enabled => true)
+    @driver = Selenium::WebDriver.for :remote, :url => "http://localhost:4444/wd/hub", :desired_capabilities => caps
+  end
+
+  after (:all) do
+    delete_fb_user(@fb_user)
+  end
+
   subject { page }
 
   describe "signin page" do
@@ -27,12 +37,12 @@ describe "Authentication" do
     end
     
     describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
-      before do
-        fill_in "Email",    with: user.email
-        fill_in "Password", with: user.password
-        click_button "Sign in"
-      end
+      # let(:user) { FactoryGirl.create(:user) }
+      # before do
+      #   fill_in "Email",    with: user.email
+      #   fill_in "Password", with: user.password
+      #   click_button "Sign in"
+      # end
 
       it { should have_selector('title', text: user.name) }
 

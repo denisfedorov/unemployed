@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
-gem 'bootstrap-sass', '2.2.2'
+gem 'rails', '3.2.13'
+gem 'bootstrap-sass', '2.3.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
-gem 'jquery-rails', '2.1.4'
-gem 'pg', '0.14.1'
+gem 'jquery-rails', '2.2.1'
+gem 'pg', '0.15.1'
 gem 'koala'
 gem 'omniauth-facebook', '1.4.0'
 
@@ -20,6 +20,7 @@ group :development, :test do
   gem 'guard-rspec', '2.4.0'
   gem 'guard-spork', '1.4.1'  
   gem 'spork', '0.9.2'
+  gem 'selenium-webdriver'
 end
 
 group :development do

@@ -33,6 +33,9 @@ class User < ActiveRecord::Base
   def pic_url
     me = graph.get_object("me")
     graph.get_picture(me["username"])
+
+  rescue 
+    ''
   end
 
   def friend_list
