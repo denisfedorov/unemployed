@@ -6,6 +6,7 @@ describe "Authentication" do
     @fb_user = create_fb_user
     caps = Selenium::WebDriver::Remote::Capabilities.phantomjs(:javascript_enabled => true)
     @driver = Selenium::WebDriver.for :remote, :url => "http://localhost:4444/wd/hub", :desired_capabilities => caps
+    @driver.manage.timeouts.implicit_wait = 10 # seconds
   end
 
   after (:all) do
@@ -36,13 +37,25 @@ describe "Authentication" do
       end
     end
     
-    describe "with valid information" do
+    describe "with valid facebook account" do
       # let(:user) { FactoryGirl.create(:user) }
       # before do
       #   fill_in "Email",    with: user.email
       #   fill_in "Password", with: user.password
       #   click_button "Sign in"
       # end
+      @driver.get signin_url
+      windows_count = @driver.window_handles.count
+      @driver.find_element(:id, "sign_in").click
+      
+      it "should open new window" do
+        @driver.window_handles.count.should be > windows_count      
+      end
+
+      @driver.switch_to.window @driver.window_handles[windows_count]
+      
+
+
 
       it { should have_selector('title', text: user.name) }
 
