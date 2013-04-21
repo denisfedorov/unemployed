@@ -1,7 +1,7 @@
 include ApplicationHelper
 
 def create_fb_user
-  test_users.create(true, "email,publish_actions")
+  test_users.create(false)
 end
 
 def delete_fb_user(fb_user)

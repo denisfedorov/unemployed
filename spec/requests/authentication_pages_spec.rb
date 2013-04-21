@@ -44,31 +44,47 @@ describe "Authentication" do
       #   fill_in "Password", with: user.password
       #   click_button "Sign in"
       # end
-      @driver.get signin_url
-      windows_count = @driver.window_handles.count
-      @driver.find_element(:id, "sign_in").click
       
       it "should open new window" do
+        @driver.get signin_url
+        windows_count = @driver.window_handles.count
+        current_window = @driver.window_handle
+        @driver.find_element(:id, "sign_in").click
         @driver.window_handles.count.should be > windows_count      
+        @driver.switch_to.window @driver.window_handles[windows_count]
       end
-
-      @driver.switch_to.window @driver.window_handles[windows_count]
       
-
-
-
-      it { should have_selector('title', text: user.name) }
-
-      it { should have_link('Users',    href: users_path) }
-      it { should have_link('Profile', href: user_path(user)) }
-      it { should have_link('Settings', href: edit_user_path(user)) }
-      it { should have_link('Sign out', href: signout_path) }
-      it { should_not have_link('Sign in', href: signin_path) }
-
-      describe "followed by signout" do
-        before { click_link "Sign out" }
-        it { should have_link('Sign in') }
+      it "should open facebook login form" do
+        email=@driver.find_element(:name, "email")
+        passwd=@driver.find_element(:name, "pass") 
+        btn_login=@driver.find_element(:name, "login")
+        email.send_keys(@fb_user["email"])
+        passwd.send_keys(@fb_user["password"])
+        btn_login.click
       end
+
+      it "should open Facebook application authorisation form" do
+        confirm=@driver.find_element(:name, "__CONFIRM__")
+        confirm.click
+        @driver.window_handles.count.should == windows_count
+        @driver.switch_to.window current_window
+      end
+
+      it "should open user home page" do
+        @driver.find_element()
+
+      # it { should have_selector('title', text: user.name) }
+
+      # it { should have_link('Users',    href: users_path) }
+      # it { should have_link('Profile', href: user_path(user)) }
+      # it { should have_link('Settings', href: edit_user_path(user)) }
+      # it { should have_link('Sign out', href: signout_path) }
+      # it { should_not have_link('Sign in', href: signin_path) }
+
+      # describe "followed by signout" do
+      #   before { click_link "Sign out" }
+      #   it { should have_link('Sign in') }
+      # end
     end
   end
 
