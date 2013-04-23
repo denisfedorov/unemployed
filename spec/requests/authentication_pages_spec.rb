@@ -46,7 +46,7 @@ describe "Authentication" do
       # end
       
       it "should open new window" do
-        @driver.get signin_url
+        @driver.get signin_url(:host => "unemployed.local")
         windows_count = @driver.window_handles.count
         current_window = @driver.window_handle
         @driver.find_element(:id, "sign_in").click
@@ -58,20 +58,25 @@ describe "Authentication" do
         email=@driver.find_element(:name, "email")
         passwd=@driver.find_element(:name, "pass") 
         btn_login=@driver.find_element(:name, "login")
+        sleep 3   # otherwise the page is closed before it is completely 
+                  # loaded which causes an exception in ghostdriver
         email.send_keys(@fb_user["email"])
         passwd.send_keys(@fb_user["password"])
         btn_login.click
       end
 
-      it "should open Facebook application authorisation form" do
-        confirm=@driver.find_element(:name, "__CONFIRM__")
-        confirm.click
-        @driver.window_handles.count.should == windows_count
-        @driver.switch_to.window current_window
-      end
+      ## commented out because FB currently doesn't take default permissions specified in the app settings
+      ##
+      # it "should open Facebook application authorisation form" do
+      #   confirm=@driver.find_element(:name, "__CONFIRM__")
+      #   confirm.click
+      #   @driver.window_handles.count.should == windows_count
+      #   @driver.switch_to.window current_window
+      # end
 
       it "should open user home page" do
-        @driver.find_element()
+        @driver.find_element(:class, "user_name").should_not be_nil
+      end
 
       # it { should have_selector('title', text: user.name) }
 
