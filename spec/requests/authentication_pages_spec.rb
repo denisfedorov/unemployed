@@ -47,6 +47,7 @@ describe "Authentication" do
       
       it "should open new window" do
         @driver.get signin_url(:host => "unemployed.local")
+        sleep 5
         windows_count = @driver.window_handles.count
         current_window = @driver.window_handle
         @driver.find_element(:id, "sign_in").click
@@ -58,7 +59,7 @@ describe "Authentication" do
         email=@driver.find_element(:name, "email")
         passwd=@driver.find_element(:name, "pass") 
         btn_login=@driver.find_element(:name, "login")
-        sleep 3   # otherwise the page is closed before it is completely 
+        sleep 10  # otherwise the page is closed before it is completely 
                   # loaded which causes an exception in ghostdriver
         email.send_keys(@fb_user["email"])
         passwd.send_keys(@fb_user["password"])
@@ -75,6 +76,7 @@ describe "Authentication" do
       # end
 
       it "should open user home page" do
+        @driver.save_screenshot("homepage.png")
         @driver.find_element(:class, "user_name").should_not be_nil
       end
 

@@ -16,9 +16,9 @@ gem 'omniauth-facebook', '1.4.0'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development, :test do
-  gem 'rspec-rails', '2.12.1'
-  gem 'guard-rspec', '2.4.0'
-  gem 'guard-spork', '1.4.1'  
+  gem 'rspec-rails', '2.13.0'
+  gem 'guard-rspec', '2.5.0'
+  gem 'guard-spork', '1.5.0'  
   gem 'spork', '0.9.2'
   gem 'selenium-webdriver'
 end
@@ -42,7 +42,8 @@ group :assets do
 end
 
 group :test do
-  gem 'capybara', '1.1.2'
+  gem 'capybara', '2.1.0'
+  gem 'poltergeist', '1.2.0'
   gem 'factory_girl_rails', '4.1.0'
   gem 'database_cleaner', '0.9.1'
   # gem 'launchy', '2.1.0'
