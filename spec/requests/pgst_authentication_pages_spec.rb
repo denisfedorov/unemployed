@@ -4,7 +4,6 @@ describe "Authentication" do
 
   before (:all) do
     @fb_user = create_fb_user
-    Capybara.javascript_driver = :poltergeist
   end
 
   after (:all) do
@@ -38,7 +37,10 @@ describe "Authentication" do
     
     describe "with valid facebook account" do
       
-      before { visit signin_url(:host => "unemployed.local") }
+      before do 
+        visit signin_url(:host => "unemployed.local")
+        save_screenshot "signin.png"
+      end
       # print Capybara.current_session.current_path
       # print Capybara.current_driver
       # Capybara.default_wait_time = 10
@@ -50,7 +52,8 @@ describe "Authentication" do
       describe "open facebook login", :js => true do 
         before { click_link("Sign in with Facebook") }
         it "should open the dialog" do
-          within_window 'Facebook' do
+          save_screenshot "aftersignin.png"
+          within_window 'Facebook - PhantomJS' do
             it { should have_field(:name, 'email') }
             it { should have_field(:name, 'pass') }
             it { should have_button(:name, 'login') }
