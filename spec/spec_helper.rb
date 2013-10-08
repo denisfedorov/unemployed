@@ -56,7 +56,7 @@ RSpec.configure do |config|
   #   c.syntax = :should
   # end
 
-
+  config.treat_symbols_as_metadata_keys_with_true_values = true
 end
 end
 

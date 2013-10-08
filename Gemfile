@@ -44,8 +44,10 @@ end
 group :test do
   gem 'capybara', '2.1.0'
   gem 'poltergeist', '1.2.0'
-  gem 'factory_girl_rails', '4.1.0'
+  gem 'factory_girl_rails', '4.2.0'
   gem 'database_cleaner', '0.9.1'
+  # gem 'vcr'
+  # gem 'webmock'
   # gem 'launchy', '2.1.0'
   # gem 'rb-fsevent', '0.9.1', :require => false
   # gem 'growl', '1.0.3'

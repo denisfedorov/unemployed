@@ -1,18 +1,18 @@
 require 'spec_helper'
 
+def capy_trace(text)
+  STDOUT.puts "capy_trace #{text}"
+  STDOUT.puts "Session: " + Capybara.current_session.to_s
+  STDOUT.puts "Url: " + page.current_url
+end
+
 describe "Authentication" do
-
-  before (:all) do
-    @fb_user = create_fb_user
-    caps = Selenium::WebDriver::Remote::Capabilities.phantomjs(:javascript_enabled => true)
-    @driver = Selenium::WebDriver.for :remote, :url => "http://localhost:4444/wd/hub", :desired_capabilities => caps
-    @driver.manage.timeouts.implicit_wait = 10 # seconds
+  before (:all) do 
+    OmniAuth.config.test_mode = true
+    @fb_user = load_fb_user
   end
-
-  after (:all) do
-    delete_fb_user(@fb_user)
-  end
-
+  after (:all) { OmniAuth.config.test_mode = false }
+  
   subject { page }
 
   describe "signin page" do
@@ -23,10 +23,12 @@ describe "Authentication" do
   end
 
   describe "signin" do
-    before { visit signin_path }
-
+  
     describe "with invalid information" do
-      before { click_button "Sign in" }
+      before do 
+        visit signin_path
+        click_button "Sign in"
+      end
 
       it { should have_selector('title', text: 'Sign in') }
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
@@ -38,74 +40,38 @@ describe "Authentication" do
     end
     
     describe "with valid facebook account" do
-      # let(:user) { FactoryGirl.create(:user) }
-      # before do
-      #   fill_in "Email",    with: user.email
-      #   fill_in "Password", with: user.password
-      #   click_button "Sign in"
-      # end
-      
-      it "should open new window" do
-        @driver.get signin_url(:host => "unemployed.local")
-        sleep 5
-        windows_count = @driver.window_handles.count
-        current_window = @driver.window_handle
-        @driver.find_element(:id, "sign_in").click
-        @driver.window_handles.count.should be > windows_count      
-        @driver.switch_to.window @driver.window_handles[windows_count]
-      end
-      
-      it "should open facebook login form" do
-        email=@driver.find_element(:name, "email")
-        passwd=@driver.find_element(:name, "pass") 
-        btn_login=@driver.find_element(:name, "login")
-        sleep 10  # otherwise the page is closed before it is completely 
-                  # loaded which causes an exception in ghostdriver
-        email.send_keys(@fb_user["email"])
-        passwd.send_keys(@fb_user["password"])
-        btn_login.click
+      before { @user = sign_in_fb_user(@fb_user) }
+
+      it "should signin with facebook" do
+        @user.should_not be_nil
+        should have_title(@user.name)
       end
 
-      ## commented out because FB currently doesn't take default permissions specified in the app settings
-      ##
-      # it "should open Facebook application authorisation form" do
-      #   confirm=@driver.find_element(:name, "__CONFIRM__")
-      #   confirm.click
-      #   @driver.window_handles.count.should == windows_count
-      #   @driver.switch_to.window current_window
-      # end
-
-      it "should open user home page" do
-        @driver.save_screenshot("homepage.png")
-        @driver.find_element(:class, "user_name").should_not be_nil
+      it "should have proper links" do 
+        should have_link('Users',    href: users_path)
+        should have_link('Profile', href: user_path(@user))
+        should have_link('Settings', href: edit_user_path(@user))
+        should have_link('Sign out', href: signout_path)
+        should_not have_link('Sign in', href: signin_path)
       end
 
-      # it { should have_selector('title', text: user.name) }
-
-      # it { should have_link('Users',    href: users_path) }
-      # it { should have_link('Profile', href: user_path(user)) }
-      # it { should have_link('Settings', href: edit_user_path(user)) }
-      # it { should have_link('Sign out', href: signout_path) }
-      # it { should_not have_link('Sign in', href: signin_path) }
-
-      # describe "followed by signout" do
-      #   before { click_link "Sign out" }
-      #   it { should have_link('Sign in') }
-      # end
+      describe "followed by signout" do
+        before { click_link "Sign out" }
+        it { should have_link('Sign in') }
+      end
     end
   end
 
   describe "authorization" do
 
     describe "for non-signed-in users" do
-      let(:user) { FactoryGirl.create(:user) }
 
       describe "when attempting to visit a protected page" do
         before do
-          visit edit_user_path(user)
-          fill_in "Email",    with: user.email
-          fill_in "Password", with: user.password
-          click_button "Sign in"
+          user1 = sign_in_fb_user(@fb_user)
+          user2 = sign_in_fb_user(load_fb_user(2))
+          visit edit_user_path(user1)
+          
         end
 
         describe "after signing in" do

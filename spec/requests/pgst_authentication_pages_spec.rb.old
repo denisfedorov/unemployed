@@ -1,0 +1,110 @@
+require 'spec_helper'
+
+@javascript
+describe "Authentication", :js => true do
+
+  before (:all) do
+    @fb_user_name = 'Unemploed John Doe'
+    @fb_user = create_fb_user(@fb_user_name)
+  end
+
+  after (:all) do
+    delete_fb_user(@fb_user)
+  end
+
+  subject { page }
+
+  describe "signin page" do
+    before do 
+      STDOUT.puts Capybara.current_driver
+      visit signin_path 
+      save_screenshot 'signinpath.png'
+    end
+
+    it { should have_selector('h1',    text: 'Sign in') }
+    it { should have_selector('title', text: 'Sign in') }
+  end
+
+  describe "signin" do
+    before (:all) { visit signin_path }
+
+    describe "with invalid information" do
+      before { click_button "Sign in" }
+
+      it { should have_selector('title', text: 'Sign in') }
+      it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+
+      describe "after visiting another page" do
+        before { click_link "Home" }
+        it { should_not have_selector('div.alert.alert-error') }
+      end
+    end
+    
+    describe "with valid facebook account", :js => true do
+      
+      before (:all) do 
+        original_host = Capybara.app_host
+        Capybara.app_host = 'https://www.facebook.com'
+        visit 'https://www.facebook.com'
+        visit @fb_user["login_url"]
+        has_content?('Facebook')
+        save_screenshot "fbscreen.png"
+        Capybara.app_host = original_host
+
+      end
+
+      it "sdfsdfsdf" do 
+        should have_content(@fb_user_name) 
+        save_screenshot "fbscreen1.png"
+      end
+
+      describe "clicking signin link", :vcr do
+        before do 
+          visit signin_url(:host => "unemployed.local")
+        end
+      # save_screenshot "signin.png"
+      # print Capybara.current_session.current_path
+      # print Capybara.current_driver
+      # Capybara.default_wait_time = 10
+      # visit signin_path #(:host => "unemployed.local")
+
+      # save_screenshot 'signin.png'
+        it { should have_link("Sign in with Facebook") }
+
+        describe "open facebook login" do 
+          before do 
+            click_link("Sign in with Facebook") 
+            sleep 30
+          end
+          # it "should open the dialog" do
+          #   save_screenshot "aftersignin.png"
+          #   within_window 'Facebook - PhantomJS' do
+          #     it { should have_field(:name, 'email') }
+          #     it { should have_field(:name, 'pass') }
+          #     it { should have_button(:name, 'login') }
+
+          #     fill_in 'email', :with => @fb_user["email"]
+          #     fill_in 'pass', :with => @fb_user["password"]
+          #     click_button :name => 'login'
+          #   end
+          # end
+          it { should have_selector(:class, 'user_name') }
+          after { save_screenshot 'afterlogin.png' }
+        end
+      end
+
+      # it { should have_selector('title', text: user.name) }
+
+      # it { should have_link('Users',    href: users_path) }
+      # it { should have_link('Profile', href: user_path(user)) }
+      # it { should have_link('Settings', href: edit_user_path(user)) }
+      # it { should have_link('Sign out', href: signout_path) }
+      # it { should_not have_link('Sign in', href: signin_path) }
+
+      # describe "followed by signout" do
+      #   before { click_link "Sign out" }
+      #   it { should have_link('Sign in') }
+      # end
+    end
+  end
+end
