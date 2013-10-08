@@ -7,8 +7,8 @@ def create_fb_user(name)
 end
 
 def load_fb_user(number = 0)
-  @loaded_users ||= YAML.load(File.read(Rails.root.join('spec/test_data/test_users.yaml')))
-  return @loaded_users["user#{number}"]
+  @loaded_users ||= YAML.load_stream(File.read(Rails.root.join('spec/test_data/test_users.yaml')))
+  return @loaded_users[number]["user#{number}"]
 end
 
 def delete_fb_user(fb_user)

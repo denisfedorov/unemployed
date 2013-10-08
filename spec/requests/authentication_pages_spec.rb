@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 def capy_trace(text)
@@ -48,7 +49,7 @@ describe "Authentication" do
       end
 
       it "should have proper links" do 
-        should have_link('Users',    href: users_path)
+        should have_button('Рекомендовать')
         should have_link('Profile', href: user_path(@user))
         should have_link('Settings', href: edit_user_path(@user))
         should have_link('Sign out', href: signout_path)

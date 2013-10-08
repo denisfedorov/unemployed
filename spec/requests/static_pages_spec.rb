@@ -11,15 +11,15 @@ describe "Static pages" do
     it { should have_selector('title', text: full_title('')) }
     it { should_not have_selector 'title', text: '| Home' }
 
-    describe "for signed-in users" do
-      let(:user) { FactoryGirl.create(:user) }
-      before do
-        FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
-        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
-        sign_in user
-        visit root_path
-      end
-    end
+    # describe "for signed-in users" do
+    #   let(:user) { FactoryGirl.create(:user) }
+    #   before do
+    #     FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
+    #     FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+    #     sign_in user
+    #     visit root_path
+    #   end
+    # end
   end
 
   describe "Help page" do
