@@ -49,7 +49,7 @@ describe "Authentication" do
       end
 
       it "should have proper links" do 
-        should have_button('Рекомендовать')
+        should have_button('Рекомендовать услугу')
         should have_link('Profile', href: user_path(@user))
         should have_link('Settings', href: edit_user_path(@user))
         should have_link('Sign out', href: signout_path)
