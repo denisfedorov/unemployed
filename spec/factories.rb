@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 FactoryGirl.define do
   factory :user do
     sequence(:name)  { |n| "Person #{n}" }
@@ -8,5 +10,12 @@ FactoryGirl.define do
     factory :admin do
       admin true
     end
+  end
+
+  factory :service do
+    sequence(:name)  { |n| "Человек #{n}" }
+    sequence(:email) { |n| "person_#{n}@example.com"}   
+    phone  { ('0'..'9').to_a.shuffle[0..9].join }
+    title "Женская стрижка" 
   end
 end
