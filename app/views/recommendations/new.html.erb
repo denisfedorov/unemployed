@@ -1,0 +1,28 @@
+<% provide(:title, 'Новая рекомендация') %>
+<h1>Новая рекомендация</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@recommendation) do |rec| %>
+      <%= render 'shared/error_messages', object: rec.object %>
+      <%= fields_for(@service) do |serv| %>
+
+	      <%= serv.label :title, "Услуга" %>
+	      <%= serv.text_field :title %>
+
+	      <%= serv.label :name, "Имя" %>
+	      <%= serv.text_field :name %>
+
+	      <%= serv.label :phone, "Номер телефона" %>
+	      <%= serv.phone_field :phone %>
+
+	      <%= serv.label :email, "E-mail" %>
+	      <%= serv.email_field :email %>
+
+	      <%= serv.label :description, "Описание услуги" %>
+	      <%= serv.text_area :description, rows: 5 %>
+	    <% end %>
+
+      <%= rec.submit "Добавить", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

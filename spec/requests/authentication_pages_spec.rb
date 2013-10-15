@@ -1,12 +1,6 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-def capy_trace(text)
-  STDOUT.puts "capy_trace #{text}"
-  STDOUT.puts "Session: " + Capybara.current_session.to_s
-  STDOUT.puts "Url: " + page.current_url
-end
-
 describe "Authentication" do
   before (:all) do 
     OmniAuth.config.test_mode = true
