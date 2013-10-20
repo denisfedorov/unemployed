@@ -13,9 +13,13 @@ class RecommendationsController < ApplicationController
   		@recommendation = current_user.recommendations.new(:service_id => @service.id)
   		@recommendation.save
       flash[:success] = "Спасибо! Рекомендация добавлена."
-      redirect_to @current_user
+      redirect_to root_url
   	end
-
   end
+
+  def index
+    @recommendations = current_user.recommendations.paginate(page: params[:page])
+  end
+
 end
 

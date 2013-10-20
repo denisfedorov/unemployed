@@ -1,0 +1,10 @@
+<% provide(:title, 'Мои рекомендации') %>
+<h1>Мои рекомендации</h1>
+
+<%= will_paginate %>
+
+<ul class="recommendations">
+  <%= render @recommendations %>
+</ul>
+
+<%= will_paginate %>

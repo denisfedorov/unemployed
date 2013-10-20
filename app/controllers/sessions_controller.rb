@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
     else
       user = User.from_omniauth(env["omniauth.auth"])
       sign_in user
-      redirect_back_or user
+      redirect_back_or root_url
     end
   end
 

@@ -5,6 +5,12 @@
         <%= render 'shared/user_info' %>
       </section>
     </aside>
+    <aside class="span8">
+      <section>
+        <%= link_to "Рекомендовать услугу",new_recommendation_path, 
+                                  class: "btn btn-large btn-primary pull-right" %>
+      </section>
+    </aside>
   </div>
 <% else %>
   <div class="center hero-unit">

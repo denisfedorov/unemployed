@@ -39,12 +39,12 @@ describe "Authentication" do
 
       it "should signin with facebook" do
         @user.should_not be_nil
-        should have_title(@user.name)
       end
 
       it "should have proper links" do 
         should have_button('Рекомендовать услугу')
         should have_link('Profile', href: user_path(@user))
+        should have_link('Мои рекомендации', href: user_path(@user))
         should have_link('Settings', href: edit_user_path(@user))
         should have_link('Sign out', href: signout_path)
         should_not have_link('Sign in', href: signin_path)
@@ -81,7 +81,7 @@ describe "Authentication" do
             end
 
             it "should render the default (profile) page" do
-              page.should have_title(user.name) 
+              page.should have_link("view my profile") 
             end
           end
         end
@@ -96,7 +96,7 @@ describe "Authentication" do
 
         describe "submitting to the update action" do
           before { put user_path(user) }
-          specify { response.should redirect_to(signin_url) }
+          specify { response.should redirect_to(signin_path) }
         end
 
         describe "visiting user index" do

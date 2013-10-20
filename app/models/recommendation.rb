@@ -9,6 +9,8 @@ class Recommendation < ActiveRecord::Base
   validates :service_id, :presence => true
   validates :user_id, :presence => true
 
+  self.per_page = 10
+
   private
   	def prepare_data_before_save
   	end
