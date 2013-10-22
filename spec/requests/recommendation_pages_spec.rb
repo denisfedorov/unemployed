@@ -3,7 +3,13 @@ require 'spec_helper'
 
 describe "Recommendation pages" do
 
-  before (:all) { @user=FactoryGirl.create(:user) }
+  before (:all) do 
+    @user=FactoryGirl.create(:user)
+  end
+  after (:all) do
+    User.destroy_all
+  end
+
   subject { page }
 
   describe "new page" do
@@ -37,8 +43,8 @@ describe "Recommendation pages" do
   describe "index" do
     before do
       sign_in @user
-      @user.recommendations.build(:service_id => FactoryGirl.create(:service, name: "Denis").id)
-      @user.recommendations.build(:service_id => FactoryGirl.create(:service, name: "Lida").id)
+      @user.recommendations.create(:service_id => FactoryGirl.create(:service, name: "Denis").id)
+      @user.recommendations.create(:service_id => FactoryGirl.create(:service, name: "Lida").id)
       visit recommendations_path
     end
 
@@ -46,10 +52,10 @@ describe "Recommendation pages" do
 
 	  describe "list user's recommendations" do
       before (:all) do
-        30.times {@user.recommendations.build(:service_id => FactoryGirl.create(:service).id)}
+        30.times {@user.recommendations.create(:service_id => FactoryGirl.create(:service).id)}
       end
       after (:all) do
-        Service.delete_all
+        Service.destroy_all
       end
 
       let(:first_page)  { @user.recommendations.paginate(page: 1) }
