@@ -15,12 +15,15 @@ module SessionsHelper
 
   def current_user
     @current_user ||= User.find_by_remember_token(cookies[:remember_token])
-    if @current_user and @current_user.provider == 'facebook'
-      if @current_user.oauth_expires_at < Time.now + 600   #if FB login expires in less than 10 minutes
-        sign_out
-      end
-    end
-    @current_user
+    #
+    ####### commented out - no need to sign up again and again.... ########## 
+    #
+    # if @current_user and @current_user.provider == 'facebook'
+    #   if @current_user.oauth_expires_at < Time.now + 600   #if FB login expires in less than 10 minutes
+    #     sign_out
+    #   end
+    # end
+    # @current_user
   end
 
   def current_user?(user)
