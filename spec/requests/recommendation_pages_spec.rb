@@ -93,7 +93,18 @@ describe "Recommendation pages" do
       end 
     end
 
+    describe "delete recommendation" do
+      it { should have_link('delete', href: recommendation_path(@user.recommendations.first)) }
+      
+      it "should be able to delete own recommendation" do
+        expect do 
+          click_link('delete', match: :first) 
+        end.to change(@user.recommendations, :count).by(-1)
+      end
+    end
   end
+
+
 end
 
 

@@ -21,5 +21,16 @@ class RecommendationsController < ApplicationController
     @recommendations = current_user.recommendations.paginate(page: params[:page])
   end
 
+  def destroy
+    rec = current_user.recommendations.find(params[:id])
+    if rec.service.is_built_from_recommendation? and rec.service.recommendations.count == 1
+      rec.service.destroy # the recommendation should get destroyed as well 
+    else
+      rec.destroy
+    end
+    flash[:success] = "Recommendation deleted."
+    redirect_to recommendations_url
+  end
+
 end
 

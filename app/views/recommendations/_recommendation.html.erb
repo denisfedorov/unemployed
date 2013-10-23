@@ -1,24 +1,24 @@
 <li>
 <div class="row">
-  <div class="span9">
+  <div class="span9 rec-block">
 		<div class="row">
-		  <div class="span6">
+		  <div class="span6 title">
 		  	<%= link_to recommendation.service.title, "#", :class =>"" %>
 		  </div>
 		  <div class="span3">
-		  	<%= recommendation.created_at.to_s %>
+		  	<%= recommendation.created_at.strftime("%d.%m.%Y %k:%M:%S") %>
 		  </div>
 		</div>
 		<div class="row">
-		  <div class="span3">
-		  	<%= recommendation.service.name %>
-		  </div>
-		  <div class="span6">
+		  <div class="span9 maintext">
+		  	<span class="name">
+		  		<%= recommendation.service.name %>
+		  	</span>
 		  	<%= recommendation.service.description %>
 		  </div>
 		</div>
 	</div>
-	<div class="span3">
+	<div class="span2">
     <%= link_to "delete", recommendation, method: :delete,
                                   data: { confirm: "You sure?" } %>
   </div>
