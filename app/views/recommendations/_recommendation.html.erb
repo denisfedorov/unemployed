@@ -19,8 +19,7 @@
 		</div>
 	</div>
 	<div class="span2">
-    <%= link_to "delete", recommendation, method: :delete,
-                                  data: { confirm: "You sure?" } %>
+    <%= link_to "delete", recommendation, method: :delete, remote: true %>
   </div>
 </div>
 </li>
