@@ -28,7 +28,7 @@ class RecommendationsController < ApplicationController
     else
       rec.destroy
     end
-    flash[:success] = "Recommendation deleted."
+    flash.now[:success] = "Recommendation deleted."
     @recommendations = current_user.recommendations.paginate(page: params[:page])
     respond_to do |format|
       format.html { redirect_to recommendations_url }
