@@ -1,16 +1,16 @@
 <li>
 <div class="row">
-  <div class="span9 rec-block">
+  <div class=".col-md-9 rec-block">
 		<div class="row">
-		  <div class="span6 title">
+		  <div class=".col-md-6 title">
 		  	<%= link_to recommendation.service.title, "#", :class =>"" %>
 		  </div>
-		  <div class="span3">
+		  <div class=".col-md-3">
 		  	<%= recommendation.created_at.strftime("%d.%m.%Y %k:%M:%S") %>
 		  </div>
 		</div>
 		<div class="row">
-		  <div class="span9 maintext">
+		  <div class=".col-md-9 maintext">
 		  	<span class="name">
 		  		<%= recommendation.service.name %>
 		  	</span>
@@ -18,7 +18,7 @@
 		  </div>
 		</div>
 	</div>
-	<div class="span2">
+	<div class=".col-md-2">
     <%= link_to "delete", recommendation, method: :delete, remote: true %>
   </div>
 </div>

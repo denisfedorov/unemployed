@@ -1,7 +1,7 @@
 <% provide(:title, 'Новая рекомендация') %>
 <h1>Новая рекомендация</h1>
 <div class="row">
-  <div class="span6 offset3">
+  <div class=".col-md-6 col-md-offset-3">
     <%= form_for(@recommendation) do |rec| %>
       <%= render 'shared/error_messages', object: rec.object %>
       <%= fields_for(@service) do |serv| %>
@@ -22,7 +22,7 @@
 	      <%= serv.text_area :description, rows: 5 %>
 	    <% end %>
 
-      <%= rec.submit "Добавить", class: "btn btn-large btn-primary" %>
+      <%= rec.submit "Добавить", class: "btn btn-lg btn-primary" %>
     <% end %>
   </div>
 </div>

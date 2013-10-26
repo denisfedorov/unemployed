@@ -1,19 +1,19 @@
 <% if signed_in? %>
   <div class="row">
-    <aside class="span4">
+    <aside class=".col-md-4">
       <section>
         <%= render 'shared/user_info' %>
       </section>
     </aside>
-    <aside class="span8">
+    <aside class=".col-md-8">
       <section>
         <%= link_to "Рекомендовать услугу",new_recommendation_path, 
-                                  class: "btn btn-large btn-primary pull-right" %>
+                                  class: "btn btn-lg btn-primary pull-right" %>
       </section>
     </aside>
   </div>
 <% else %>
-  <div class="center hero-unit">
+  <div class="center jumbotron">
     <h1>Welcome to the Sample App</h1>
 
     <h2>
@@ -23,7 +23,7 @@
     </h2>
 
     <%= link_to "Sign up now!", signup_path, 
-                                class: "btn btn-large btn-primary" %>
+                                class: "btn btn-lg btn-primary" %>
   </div>
 
   <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
